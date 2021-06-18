@@ -3,7 +3,8 @@ import { AirportList } from "../model/AirportList";
 class AirportService {
     getAirportList = (): Promise<AirportList> => {
         return new Promise((resolve) => {
-            resolve(JSON.parse(`{
+            resolve(
+                JSON.parse(`{
                 "routes": [
                     {
                         "code": "ASU",
@@ -167,9 +168,10 @@ class AirportService {
                         }
                     }
                 ]
-            }`));
+            }`)
+            );
         });
-    }
+    };
 }
 
 export default new AirportService();

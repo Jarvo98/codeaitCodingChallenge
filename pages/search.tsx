@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
-import {AirportList} from "../model/AirportList";
+import { AirportList } from "../model/AirportList";
 import AirportCardList from "../components/airport/AirportCardList";
 import AirportService from "../services/AirportService";
 
@@ -11,9 +11,9 @@ const Search: FC = () => {
         const fetchAirportList = async () => {
             const airportList = await AirportService.getAirportList();
             setAirportList(airportList);
-        }
+        };
 
-        fetchAirportList()
+        fetchAirportList();
     }, []);
 
     return (
@@ -38,7 +38,9 @@ const Search: FC = () => {
                         <a>Start your journey!</a>
                     </Link>
                 </article> */}
-                {isAirportListValid(airportList) ? <AirportCardList airportList={airportList} /> : (
+                {isAirportListValid(airportList) ? (
+                    <AirportCardList airportList={airportList} />
+                ) : (
                     <h1>There are no airports available</h1>
                 )}
             </main>
@@ -47,7 +49,7 @@ const Search: FC = () => {
 };
 
 const isAirportListValid = (airportList: AirportList): boolean => {
-    return (!!airportList && (airportList.routes.length > 0));
-}
+    return !!airportList && airportList.routes.length > 0;
+};
 
 export default Search;
