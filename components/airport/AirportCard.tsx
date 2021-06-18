@@ -59,7 +59,7 @@ const AirportCard: FC<Props> = ({ airport }) => {
                 <IconButton>{expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}</IconButton>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <DestinationAirportList destinations={destinations} />
+                <DestinationAirportList origin={code} destinations={destinations} />
             </Collapse>
         </Card>
     );

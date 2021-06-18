@@ -10,7 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import { CssBaseline, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { Container } from "@material-ui/core";
-import Router from "next/router";
+import { useRouter } from "next/router";
 
 interface Props {
     children: ReactNode;
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const MainLayout: FC<Props> = ({ children }) => {
     const { root, menuButton, drawerHeader, appBarContainer } = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(true);
+    const router = useRouter();
     const text = "Search";
 
     return (
@@ -60,7 +61,7 @@ const MainLayout: FC<Props> = ({ children }) => {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem button key={text} onClick={() => Router.push({ pathname: "/search" })}>
+                    <ListItem button key={text} onClick={() => router.push({ pathname: "/search" })}>
                         <ListItemIcon>
                             <SearchIcon />
                         </ListItemIcon>

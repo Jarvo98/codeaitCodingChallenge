@@ -1,6 +1,9 @@
 import React, { FC } from "react";
+import { useRouter } from "next/router";
 
 const Flights: FC = () => {
+    const { query } = useRouter();
+
     return (
         <main>
             <article>
