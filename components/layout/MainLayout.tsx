@@ -87,7 +87,7 @@ const MainLayout: FC<Props> = ({ children }) => {
                     </AppBar>
                 </div>
 
-                <Container maxWidth="md">{children}</Container>
+                <Container maxWidth="lg">{children}</Container>
             </div>
         </div>
     );
