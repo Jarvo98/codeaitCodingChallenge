@@ -13,8 +13,8 @@ import React, { FC, useState } from "react";
 import Airport from "../../model/Airtport";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import image from "../../assets/img/pexels-burst-374870.jpg";
 import Image from "next/image";
+import image from "../../assets/img/pexels-tanathip-rattanatum-2026324.jpg";
 import DestinationAirportList from "./DestinationAirportList";
 
 interface Props {
@@ -39,7 +39,12 @@ const useStyles = makeStyles(() =>
 );
 
 const AirportCard: FC<Props> = ({ airport }) => {
-    const { code, description, destinations } = airport;
+    const {
+        code,
+        description,
+        destinations,
+        location: { cityName },
+    } = airport;
     const { card, cardActions, cardHeaderAvatar } = useStyles();
 
     // State
@@ -53,13 +58,13 @@ const AirportCard: FC<Props> = ({ airport }) => {
         <Card className={card} onClick={toggleExpanded}>
             <CardHeader avatar={<Avatar className={cardHeaderAvatar}>{code}</Avatar>} title={description} />
             <CardMedia>
-                <Image src={image} alt="Generic city" />
+                <Image src={image} alt="Airport Photo" />
             </CardMedia>
             <CardActions className={cardActions} disableSpacing>
                 <IconButton>{expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}</IconButton>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <DestinationAirportList origin={code} destinations={destinations} />
+                <DestinationAirportList originCode={code} originCity={cityName} destinations={destinations} />
             </Collapse>
         </Card>
     );

@@ -4,11 +4,12 @@ import DestinationAirport from "../../model/DestinationAirport";
 import DestinationAirportListItem from "./DestinationAirportListItem";
 
 interface Props {
-    origin: string;
+    originCode: string;
+    originCity: string;
     destinations: DestinationAirport[];
 }
 
-const DestinationAirportList: FC<Props> = ({ destinations, origin }) => {
+const DestinationAirportList: FC<Props> = ({ destinations, originCode, originCity }) => {
     return (
         <>
             <h2 style={{ paddingLeft: "1rem" }}>Destinations</h2>
@@ -16,7 +17,8 @@ const DestinationAirportList: FC<Props> = ({ destinations, origin }) => {
                 {destinations.map((destinationAirport) => (
                     <DestinationAirportListItem
                         key={destinationAirport.code}
-                        origin={origin}
+                        originCode={originCode}
+                        originCity={originCity}
                         destinationAirport={destinationAirport}
                     />
                 ))}

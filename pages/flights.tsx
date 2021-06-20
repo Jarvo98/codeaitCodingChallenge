@@ -1,44 +1,47 @@
-import React, { FC } from "react";
-import { useRouter } from "next/router";
+import React, { FC, useEffect, useState } from "react";
+import { NextRouter, useRouter } from "next/router";
+import MainLayout from "../components/layout/MainLayout";
+import FlightsRouteProps from "../model/FlightsRouteProps";
+import FlightListComponent from "../components/flight/FlightListComponent";
+import FlightService from "../services/FlightService";
+import Flight from "../model/Flight";
 
 const Flights: FC = () => {
-    const { query } = useRouter();
+    const { origin, destination } = getRouteProps(useRouter());
+    const [flightList, setFlightList] = useState<Flight[]>([]);
+
+    useEffect(() => {
+        const fetchFlightList = async () => {
+            const flightList = await FlightService.getAllFlights();
+            setFlightList(flightList);
+        };
+
+        fetchFlightList();
+    }, []);
 
     return (
-        <main>
-            <article>
-                <h2>Choose your outbound flight to Mendoza</h2>
-                <section>
-                    <p>
-                        Here it should be a flight list with all available outbound flights for the selected trip. Each
-                        list item should have:
-                    </p>
-                    <ul>
-                        <li>A dummy image</li>
-                        <li>Should be selectable by clicking the whole card</li>
-                        <li>Display the airport code</li>
-                        <li>Display the location city name</li>
-                        <li>Display the flight times and duration</li>
-                        <li>Display the price for the leg</li>
-                    </ul>
-                </section>
-            </article>
-            <article>
-                <h2>Choose your inbound flight to Buenos Aires</h2>
-                <section>
-                    <p>Here it should be a flight list with all available inbound flights for the selected trip.</p>
-                    <ul>
-                        <li>A dummy image</li>
-                        <li>Should be selectable by clicking the whole card</li>
-                        <li>Display the airport code</li>
-                        <li>Display the location city name</li>
-                        <li>Display the flight times and duration</li>
-                        <li>Display the price for the leg</li>
-                    </ul>
-                </section>
-            </article>
-        </main>
+        <MainLayout>
+            <h2>Choose your outbound flight to {destination.city}</h2>
+            <FlightListComponent flightList={flightList} origin={origin} destination={destination} />
+            <h2>Choose your inbound flight to {origin.city} </h2>
+            <FlightListComponent flightList={flightList} origin={destination} destination={origin} />
+        </MainLayout>
     );
+};
+
+const getRouteProps = ({ query }: NextRouter): FlightsRouteProps => {
+    const { originCode, originCity, destinationCode, destinationCity } = query;
+
+    return {
+        origin: {
+            code: originCode,
+            city: originCity,
+        },
+        destination: {
+            code: destinationCode,
+            city: destinationCity,
+        },
+    };
 };
 
 export default Flights;

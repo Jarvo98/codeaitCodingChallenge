@@ -9,6 +9,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Divider from "@material-ui/core/Divider";
 import { CssBaseline, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import HomeIcon from "@material-ui/icons/Home";
 import { Container } from "@material-ui/core";
 import { useRouter } from "next/router";
 
@@ -37,11 +38,23 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
+const routes = [
+    {
+        name: "Home",
+        Icon: HomeIcon,
+        path: "/",
+    },
+    {
+        name: "Search",
+        Icon: SearchIcon,
+        path: "/search",
+    },
+];
+
 const MainLayout: FC<Props> = ({ children }) => {
     const { root, menuButton, drawerHeader, appBarContainer } = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(true);
     const router = useRouter();
-    const text = "Search";
 
     return (
         <div className={root}>
@@ -61,12 +74,14 @@ const MainLayout: FC<Props> = ({ children }) => {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem button key={text} onClick={() => router.push({ pathname: "/search" })}>
-                        <ListItemIcon>
-                            <SearchIcon />
-                        </ListItemIcon>
-                        <ListItemText>{text}</ListItemText>
-                    </ListItem>
+                    {routes.map(({ name, Icon, path }) => (
+                        <ListItem button key={name} onClick={() => router.push({ pathname: path })}>
+                            <ListItemIcon>
+                                <Icon />
+                            </ListItemIcon>
+                            <ListItemText>{name}</ListItemText>
+                        </ListItem>
+                    ))}
                 </List>
             </Drawer>
             <div style={{ flexGrow: 1 }}>
@@ -88,7 +103,9 @@ const MainLayout: FC<Props> = ({ children }) => {
                     </AppBar>
                 </div>
 
-                <Container maxWidth="lg">{children}</Container>
+                <Container maxWidth="lg">
+                    <main>{children}</main>
+                </Container>
             </div>
         </div>
     );
